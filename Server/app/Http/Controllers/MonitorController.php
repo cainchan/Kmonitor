@@ -19,14 +19,13 @@ class MonitorController extends Controller
 			$ret->email = $request->input('email');
 			$ret->balance = "0";
 			$ret->save();
-		}else{
+		}else if($ret->email != $request->input('email')){
 			// 更新时间
 			$ret->email = $request->input('email');
 			$ret->updated_at = date('Y-m-d H:i:s');
 			$ret->save();
 		}
-		$result['result'] = 'success';
-		return response()->json($ret);
+		return redirect('getMonitorData/'.$wallet);
 	}
 	public function getMonitorData($wallet)
 	{
