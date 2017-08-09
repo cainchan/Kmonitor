@@ -1,7 +1,7 @@
 # Kmonitor
 monitor Miner
 
-##Server
+## Server
 ```
 git clone https://github.com/ikaychen/Kmonitor.git
 cd Kmonitor
