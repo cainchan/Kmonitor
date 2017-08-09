@@ -3,31 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\MonitorData;
+use App\WalletSetting;
 use Illuminate\Http\Request;
 
 class MonitorController extends Controller
 {
+	public function saveWalletSetting(Request $request, $wallet)
+	{
+		$result = ['result' => '', 'error_msg' => '', 'code' => 1];
+		// 通过wallet查询数据
+		$ret = WalletSetting::where('wallet',$wallet)->first();
+		if (empty($ret)){
+			$ret = new WalletSetting;
+			$ret->wallet = $wallet;
+			$ret->email = $request->input('email');
+			$ret->balance = "0";
+			$ret->save();
+		}else{
+			// 更新时间
+			$ret->email = $request->input('email');
+			$ret->updated_at = date('Y-m-d H:i:s');
+			$ret->save();
+		}
+		$result['result'] = 'success';
+		return response()->json($ret);
+	}
 	public function getMonitorData($wallet)
 	{
-		$ret = MonitorData::where('wallet',$wallet)->get();
-		return response()->json($ret);
+		$monitor_data = MonitorData::where('wallet',$wallet)->get();
+		$setting = WalletSetting::where('wallet',$wallet)->first();
+		$data = ['wallet' => $wallet,
+			'email' => empty($setting)?'':$setting['email'],
+			'results' => $monitor_data,
+		];
+		return view('welcome',$data);
+		//return response()->json($ret);
 	}
     public function pushMonitorData($wallet,$miner)
     {
-	$result = ['result' => '', 'error_msg' => '', 'code' => 1];
-	// 通过wallet+miner查询数据
-	$ret = MonitorData::where('wallet',$wallet)->where('miner',$miner)->first();
-	if (empty($ret)){
-		$data = new MonitorData;
-		$data->wallet = $wallet;
-		$data->miner = $miner;
-		$data->save();
-	}else{
-		// 更新时间
-		$ret->updated_at = date('Y-m-d H:i:s');
-		$ret->save();
-	}
+		$result = ['result' => '', 'error_msg' => '', 'code' => 1];
+		// 通过wallet+miner查询数据
+		$ret = MonitorData::where('wallet',$wallet)->where('miner',$miner)->first();
+		if (empty($ret)){
+			$ret = new MonitorData;
+			$ret->wallet = $wallet;
+			$ret->miner = $miner;
+			$ret->save();
+		}else{
+			// 更新时间
+			$ret->updated_at = date('Y-m-d H:i:s');
+			$ret->save();
+		}
 		$result['result'] = 'success';
-        return response()->json($result);
+		return response()->json($result);
     }
 }
+

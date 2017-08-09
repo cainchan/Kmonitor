@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/{wallet?}', function ($wallet) {
+    return view('welcome',['wallet' => $wallet]);
 });
-Route::get('api/getMonitorData/{wallet}','MonitorController@getMonitorData');
+Route::get('getMonitorData/{wallet}','MonitorController@getMonitorData');
 Route::get('api/pushMonitorData/{wallet}/{miner}','MonitorController@pushMonitorData');
+Route::post('api/saveWalletSetting/{wallet}','MonitorController@saveWalletSetting');
 
