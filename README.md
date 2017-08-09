@@ -1,0 +1,2 @@
+# Kmonitor
+monitor Miner
