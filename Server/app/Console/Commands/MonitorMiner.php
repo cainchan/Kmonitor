@@ -45,6 +45,7 @@ class MonitorMiner extends Command
 		// 通过wallet查询数据
 		$ret = WalletSetting::where('wallet',$miner->wallet)->first();
 		if (!empty($ret)){
+			if (empty($ret->email)){continue;}
 			Mail::to($ret->email)->send(new OfflineWarning($miner));
 			echo sprintf("miner %s offline at %s , send mail to %s%s",$miner->miner,$miner->updated_at,$ret->email,PHP_EOL);
 		}	
