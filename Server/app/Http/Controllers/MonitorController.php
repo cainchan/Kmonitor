@@ -25,7 +25,7 @@ class MonitorController extends Controller
 			$ret->updated_at = date('Y-m-d H:i:s');
 			$ret->save();
 		}
-		return redirect('getMonitorData/'.$wallet);
+		return redirect('wallet/'.$wallet);
 	}
 	public function getMonitorData($wallet)
 	{
