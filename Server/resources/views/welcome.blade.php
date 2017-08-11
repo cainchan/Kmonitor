@@ -14,11 +14,6 @@
 	<input type="submit" value="保存">
 	</form>
 	<br>
-	余额:{{$setting->balance}}
-	<br>
-	余额更新:{{$setting->updated_at}}
-	<br>
-	<br>
 	<table border="1">
 	<thead>
 		<tr>
@@ -33,6 +28,14 @@
     		<td>{{ $miner->updated_at }}</td>
 		</tr>
 		@endforeach
+		<tr>
+		<th>余额</th>
+		<th>更新时间</th>
+		</tr>
+		<tr>
+		<td>{{$setting->balance}}</td>
+		<td>{{$setting->updated_at}}</td>
+		</tr>
 	</tbody>
 	</table>
 	<br>

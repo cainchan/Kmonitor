@@ -50,18 +50,18 @@ class MonitorBalance extends Command
 		phpQuery::newDocument($b);
 		$c = pq('table td:last')->text();
 		$balance = trim($c," ETH");
-		$wallet->balance = $balance;
+		$wallet->balance = sprintf("%0.6f",$balance);;
 		$wallet->updated_at = date('Y-m-d H:i:s');
 		$wallet->save();
 		echo sprintf("%s %s balance=%s%s",
 			date('Y-m-d H:i:s'),
 			$wallet->wallet,
-			$balance,
+			$wallet->balance,
 			PHP_EOL
 		);
 	}
 	}catch(Exception $e){
-		echo $e->getMessages();
+		echo date('Y-m-d H:i:s').'monitor balance failed';
 		//throw $e;
 	}
     }
