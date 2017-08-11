@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c299fd7c6ab9fc3b1a3577ec40855d0b",
-    "content-hash": "96098e473b028cdb2529580554a1ae3e",
+    "hash": "762bc540a265243bebb8fb95bb8ea6fb",
+    "content-hash": "c055b70798827570f5d3dae6dcebd730",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -106,6 +106,46 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "electrolinux/phpquery",
+            "version": "0.9.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/electrolinux/phpquery.git",
+                "reference": "6cb8afcfe8cd4ce45f2f8c27d561383037c27a3a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/electrolinux/phpquery/6cb8afcfe8cd4ce45f2f8c27d561383037c27a3a.zip",
+                "reference": "6cb8afcfe8cd4ce45f2f8c27d561383037c27a3a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "phpQuery/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobiasz Cudnik",
+                    "email": "tobiasz.cudnik@gmail.com",
+                    "homepage": "https://github.com/TobiaszCudnik",
+                    "role": "Developer"
+                },
+                {
+                    "name": "didier Belot",
+                    "role": "Packager"
+                }
+            ],
+            "description": "phpQuery is a server-side, chainable, CSS3 selector driven Document Object Model (DOM) API based on jQuery JavaScript Library",
+            "homepage": "http://code.google.com/p/phpquery/",
+            "time": "2013-03-21 12:39:33"
         },
         {
             "name": "erusev/parsedown",

@@ -10,9 +10,14 @@
         <div class="flex-center position-ref full-height">
 	<form method="POST" action="/api/saveWalletSetting/{{ $wallet }}">{{ csrf_field() }}
 	离线通知Email:<br>
-	<input type="text"  name="email" value="{{ $email }}">
+	<input type="text"  name="email" value="{{ $setting->email }}">
 	<input type="submit" value="保存">
 	</form>
+	<br>
+	余额:{{$setting->balance}}
+	<br>
+	余额更新:{{$setting->updated_at}}
+	<br>
 	<br>
 	<table border="1">
 	<thead>

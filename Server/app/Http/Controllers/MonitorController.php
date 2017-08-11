@@ -22,7 +22,7 @@ class MonitorController extends Controller
 		}else if($ret->email != $request->input('email')){
 			// 更新时间
 			$ret->email = $request->input('email');
-			$ret->updated_at = date('Y-m-d H:i:s');
+			//$ret->updated_at = date('Y-m-d H:i:s');
 			$ret->save();
 		}
 		return redirect('wallet/'.$wallet);
@@ -32,7 +32,7 @@ class MonitorController extends Controller
 		$monitor_data = MonitorData::where('wallet',$wallet)->get();
 		$setting = WalletSetting::where('wallet',$wallet)->first();
 		$data = ['wallet' => $wallet,
-			'email' => empty($setting)?'':$setting['email'],
+			'setting' => $setting,
 			'results' => $monitor_data,
 		];
 		return view('welcome',$data);
