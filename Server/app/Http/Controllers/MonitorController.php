@@ -17,7 +17,9 @@ class MonitorController extends Controller
 			$ret = new WalletSetting;
 			$ret->wallet = $wallet;
 			$ret->email = $request->input('email');
-			$ret->balance = "0";
+			$ret->balance = "";
+			$ret->last_paid_date = "";
+			$ret->last_paid_balance = "";
 			$ret->save();
 		}else if($ret->email != $request->input('email')){
 			// 更新时间

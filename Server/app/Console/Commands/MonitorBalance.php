@@ -45,13 +45,27 @@ class MonitorBalance extends Command
 	foreach($ret as $wallet){
 		$url = sprintf("https://www.f2pool.com/eth/%s",$wallet->wallet);
 		$a = file_get_contents($url);
+		// 获取余额
 		$b = strstr($a,'<div class="table-responsive">');
 		$b = strstr($b,'<table id="workers"',TRUE);
 		phpQuery::newDocument($b);
 		$c = pq('table td:last')->text();
-		$balance = trim($c," ETH");
-		$wallet->balance = sprintf("%0.6f",$balance);;
+		$wallet->balance = sprintf("%0.6f",$c);;
 		$wallet->updated_at = date('Y-m-d H:i:s');
+		// 获取最后一次付款日期+金额
+		$b = strstr($a,'<div style="color: #666666;">');
+		$b = strstr($b,'<footer class="footer">',TRUE);
+		phpQuery::newDocument($b);
+		$c = pq('table td:first')->text();
+		if (!empty($c)){
+			// 获取最后一次付款日期+金额
+			$matchP = "/([^\d]*)(?P<time>\d*)([^\d]*)/";
+			preg_match($matchP,$c,$d);
+			$wallet->last_paid_date = date('Y-m-d',$d['time']);
+			// 获取最后一次付款金额
+			$c = pq('table td:eq(2)')->text();
+			$wallet->last_paid_balance = sprintf("%0.6f",$c);
+		}
 		$wallet->save();
 		echo sprintf("%s %s balance=%s%s",
 			date('Y-m-d H:i:s'),

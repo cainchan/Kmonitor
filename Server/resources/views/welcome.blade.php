@@ -10,7 +10,11 @@
         <div class="flex-center position-ref full-height">
 	<form method="POST" action="/api/saveWalletSetting/{{ $wallet }}">{{ csrf_field() }}
 	离线通知Email:<br>
+	@if ($setting)
 	<input type="text"  name="email" value="{{ $setting->email }}">
+	@else
+	<input type="text"  name="email" value="">
+	@endif
 	<input type="submit" value="保存">
 	</form>
 	<br>
@@ -28,14 +32,26 @@
     		<td>{{ $miner->updated_at }}</td>
 		</tr>
 		@endforeach
+		@if ($setting)
+		@if ($setting->balance)
 		<tr>
-		<th>余额</th>
+		<th>未付余额</th>
 		<th>更新时间</th>
 		</tr>
 		<tr>
 		<td>{{$setting->balance}}</td>
 		<td>{{$setting->updated_at}}</td>
 		</tr>
+		<tr>
+		<th>最近支付</th>
+		<th>支付时间</th>
+		</tr>
+		<tr>
+		<td>{{$setting->last_paid_balance}}</td>
+		<td>{{$setting->last_paid_date}}</td>
+		</tr>	
+		@endif
+		@endif
 	</tbody>
 	</table>
 	<br>

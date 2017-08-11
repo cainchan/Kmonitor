@@ -17,7 +17,9 @@ class CreateTableWalletSetting extends Migration
             $table->increments('id');
 	    $table->string('wallet',100)->unique();
 	    $table->string('email',50);
-	    $table->string('balance',50);
+	    $table->string('balance',20);
+	    $table->string('last_paid_date',20);
+	    $table->string('last_paid_balance',20);
             $table->timestamps();
         });
     }
