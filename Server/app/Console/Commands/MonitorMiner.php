@@ -40,6 +40,9 @@ class MonitorMiner extends Command
      */
     public function handle()
     {
+	// 删除更新时间超过1天
+	MonitorData::where('updated_at','<',date('Y-m-d H:i:s',strtotime("-1 day")))->delete();
+	// 获取更新时间超过5分钟的数据进行提醒
 	$monitor_data = MonitorData::where('updated_at','<',date('Y-m-d H:i:s',strtotime("-5 minute")))->get();
 	foreach($monitor_data as $miner){
 		// 通过wallet查询数据
