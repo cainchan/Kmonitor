@@ -92,11 +92,6 @@ def pushMonitorData():
             time.sleep(int(sleeptime))
         except Exception,e:
             file("c:\Kmonitor\log.txt","ab").write('%s Error: %s\r\n'%(time.ctime(),e))
-            p = Popen("ping 192.168.1.1",shell = True)
-            if p.wait() != 0:
-                os.popen("c:\Kmonitor\devcon.exe disable USB\VID_0E8D")
-                os.popen("c:\Kmonitor\devcon.exe enable USB\VID_0E8D")
-                file("c:\Kmonitor\log.txt","ab").write('%s restart USB\VID_0E8D\r\n'%time.ctime())
             time.sleep(int(sleeptime))
     return
 
