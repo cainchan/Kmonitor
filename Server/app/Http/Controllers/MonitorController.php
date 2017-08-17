@@ -20,6 +20,7 @@ class MonitorController extends Controller
 			$ret->balance = "";
 			$ret->last_paid_date = "";
 			$ret->last_paid_balance = "";
+			$ret->price = "{}";
 			$ret->save();
 		}else if($ret->email != $request->input('email')){
 			// 更新时间
@@ -35,6 +36,7 @@ class MonitorController extends Controller
 		$setting = WalletSetting::where('wallet',$wallet)->first();
 		$data = ['wallet' => $wallet,
 			'setting' => $setting,
+			'price' => json_decode($setting->price),
 			'results' => $monitor_data,
 		];
 		return view('welcome',$data);

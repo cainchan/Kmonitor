@@ -43,8 +43,17 @@
 		<td>{{$setting->updated_at}}</td>
 		</tr>
 		<tr>
+		<th>单价</th>
+		<th>价值</th>
+		</tr>
+		<tr>
+		<td>{{$price->sell}}</td>
+		<td>{{$setting->balance * $price->sell}}</td>
+		</tr>	
+
+		<tr>
 		<th>最近支付</th>
-		<th>支付时间</th>
+		<th>支付日期</th>
 		</tr>
 		<tr>
 		<td>{{$setting->last_paid_balance}}</td>

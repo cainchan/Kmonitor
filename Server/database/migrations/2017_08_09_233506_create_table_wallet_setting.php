@@ -20,6 +20,7 @@ class CreateTableWalletSetting extends Migration
 	    $table->string('balance',20);
 	    $table->string('last_paid_date',20);
 	    $table->string('last_paid_balance',20);
+	    $table->json('price');
             $table->timestamps();
         });
     }
