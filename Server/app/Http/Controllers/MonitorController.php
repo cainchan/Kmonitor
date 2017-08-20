@@ -36,7 +36,7 @@ class MonitorController extends Controller
 		$setting = WalletSetting::where('wallet',$wallet)->first();
 		$data = ['wallet' => $wallet,
 			'setting' => $setting,
-			'price' => json_decode($setting->price),
+			'price' => empty($setting)?"{}":json_decode($setting->price),
 			'results' => $monitor_data,
 		];
 		return view('welcome',$data);
