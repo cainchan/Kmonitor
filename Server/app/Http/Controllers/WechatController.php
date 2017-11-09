@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MonitorData;
+use App\WalletSetting;
 use Log;
 
 class WechatController extends Controller
@@ -19,11 +21,16 @@ class WechatController extends Controller
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function($message){
 		switch ($message->MsgType) {
-			case 'event':
-			    return '收到事件消息';
-			    break;
 			case 'text':
 			    return '收到文字消息';
+			    break;
+			case 'event':
+				$data = $this->getMonitorData($message->EventKey);
+				$text = sprintf("当前余额:%s\n最后更新时间:%s\n最后一次支付:%s\n最后支付时间:%s\n",$data['setting']['balance'],$data['setting']['updated_at'],$data['setting']['last_paid_balance'],$data['setting']['last_paid_date']);
+				foreach($data['results'] as $miner){
+					$text .= sprintf("%s:%s\n",$miner['miner'],$miner['updated_at']);
+				}
+				return $text;
 			    break;
 			case 'image':
 			    return '收到图片消息';
@@ -50,4 +57,16 @@ class WechatController extends Controller
         Log::info('return response.');
         return $wechat->server->serve();
     }
+	public function getMonitorData($wallet)
+        {
+                $monitor_data = MonitorData::where('wallet',$wallet)->get();
+                $setting = WalletSetting::where('wallet',$wallet)->first();
+                $data = ['wallet' => $wallet,
+                        'setting' => $setting,
+                        'price' => empty($setting)?"{}":json_decode($setting->price),
+                        'results' => $monitor_data,
+                ];
+                return $data;
+        }
+
 }

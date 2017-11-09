@@ -42,7 +42,7 @@ class MonitorController extends Controller
 		return view('welcome',$data);
 		//return response()->json($ret);
 	}
-    public function pushMonitorData($wallet,$miner)
+	public function pushMonitorData($wallet,$miner)
     {
 		$result = ['result' => '', 'error_msg' => '', 'code' => 1];
 		// 通过wallet+miner查询数据

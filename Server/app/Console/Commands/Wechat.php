@@ -35,7 +35,34 @@ class Wechat extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(){
+	$wechat = app('wechat');
+	$menu = $wechat->menu;
+	$buttons = [
+	    [
+		"type" => "click",
+		"name" => "挖矿进度",
+		"key"  => "0x93019bdf0c43a968630b58bda2a669ead3aff7ae"
+	    ],
+	    [
+		"name"       => "菜单",
+		"sub_button" => [
+		    [
+			"type" => "view",
+			"name" => "Web查看",
+			"url"  => "http://monitor.kaychen.cn/wallet/0x93019bdf0c43a968630b58bda2a669ead3aff7ae"
+		    ],
+		    [
+			"type" => "view",
+			"name" => "视频",
+			"url"  => "http://v.qq.com/"
+		    ],
+		],
+	    ],
+	];
+	$menu->add($buttons);
+    }
+    public function sendMessage()
     {
         //
         $wechat = app('wechat');
