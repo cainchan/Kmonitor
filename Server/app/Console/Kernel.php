@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
 	//
 	Commands\MonitorMiner::class,
-	Commands\MonitorBalance::class
+	Commands\MonitorBalance::class,
+	Commands\Wechat::class
     ];
 
     /**

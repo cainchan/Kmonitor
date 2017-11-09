@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::any('/wechat','WechatController@serve');
 Route::get('wallet/{wallet}','MonitorController@getMonitorData');
 Route::get('api/pushMonitorData/{wallet}/{miner}','MonitorController@pushMonitorData');
 Route::post('api/saveWalletSetting/{wallet}','MonitorController@saveWalletSetting');
