@@ -42,20 +42,20 @@ class Wechat extends Command
 	    [
 		"type" => "click",
 		"name" => "挖矿进度",
-		"key"  => "0x93019bdf0c43a968630b58bda2a669ead3aff7ae"
+		"key"  => "0x0506823c25da021db639aa61a3c6d8636bbe3f42"
 	    ],
 	    [
-		"name"       => "菜单",
+		"name"       => "其它",
 		"sub_button" => [
 		    [
 			"type" => "view",
 			"name" => "Web查看",
-			"url"  => "http://monitor.kaychen.cn/wallet/0x93019bdf0c43a968630b58bda2a669ead3aff7ae"
+			"url"  => "http://monitor.kaychen.cn/wallet/0x0506823c25da021db639aa61a3c6d8636bbe3f42"
 		    ],
 		    [
 			"type" => "view",
-			"name" => "视频",
-			"url"  => "http://v.qq.com/"
+			"name" => "鱼池",
+			"url"  => "https://www.f2pool.com/eth/0x0506823c25da021db639aa61a3c6d8636bbe3f42"
 		    ],
 		],
 	    ],

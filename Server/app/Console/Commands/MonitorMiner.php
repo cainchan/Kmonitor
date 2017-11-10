@@ -48,27 +48,30 @@ class MonitorMiner extends Command
 		// 通过wallet查询数据
 		$ret = WalletSetting::where('wallet',$miner->wallet)->first();
 		if (!empty($ret)){
-			$wechat = app('wechat');
-			$notice = $wechat->notice;
-			$userId = 'oLvgW1JSUlsQiF6pcNWZr02CLHPE';
-			$templateId = 'vOFqtYSmBq-CqqZiA6id43FOW1BPrfAKNOOZYlYIap0';
-			$url = 'http://monitor.kaychen.cn/wallet/0x93019bdf0c43a968630b58bda2a669ead3aff7ae';
-			$data = array(
-				 "first"  => $miner->miner."离线提醒",
-				 "miner"   => $miner->miner,
-				 "updated_at"  => $miner->updated_at,
-				 "remark" => "请及时处理",
-			);
-			$result = $notice->uses($templateId)
-					->withUrl($url)
-					->andData($data)
-					->andReceiver($userId)
-					->send();
-			echo json_encode($result);
+			if ($miner->wallet != '0x0506823c25da021db639aa61a3c6d8636bbe3f42'){
+				if (empty($ret->email)){continue;}
+				Mail::to($ret->email)->send(new OfflineWarning($miner));
+				echo sprintf("miner %s offline at %s , send mail to %s%s",$miner->miner,$miner->updated_at,$ret->email,PHP_EOL);
+			}else{
+				$wechat = app('wechat');
+				$notice = $wechat->notice;
+				$userId = 'oLvgW1JSUlsQiF6pcNWZr02CLHPE';
+				$templateId = 'vOFqtYSmBq-CqqZiA6id43FOW1BPrfAKNOOZYlYIap0';
+				$url = 'http://monitor.kaychen.cn/wallet/0x93019bdf0c43a968630b58bda2a669ead3aff7ae';
+				$data = array(
+					 "first"  => $miner->miner."离线提醒",
+					 "miner"   => $miner->miner,
+					 "updated_at"  => $miner->updated_at,
+					 "remark" => "请及时处理",
+				);
+				$result = $notice->uses($templateId)
+						->withUrl($url)
+						->andData($data)
+						->andReceiver($userId)
+						->send();
+				echo json_encode($result);
+			}
 
-			//if (empty($ret->email)){continue;}
-			//Mail::to($ret->email)->send(new OfflineWarning($miner));
-			//echo sprintf("miner %s offline at %s , send mail to %s%s",$miner->miner,$miner->updated_at,$ret->email,PHP_EOL);
 		}	
 		
 	}

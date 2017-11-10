@@ -68,7 +68,7 @@ class MonitorBalance extends Command
 		}
 		// 获取当前ETH价格
 		$a = file_get_contents('https://www.okcoin.cn/real/ticker.do?symbol=2');
-		$wallet->price = $a;
+		$wallet->price = '';
 		$wallet->save();
 		echo sprintf("%s %s balance=%s%s",
 			date('Y-m-d H:i:s'),

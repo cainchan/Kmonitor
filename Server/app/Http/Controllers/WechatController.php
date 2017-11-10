@@ -26,7 +26,7 @@ class WechatController extends Controller
 			    break;
 			case 'event':
 				$data = $this->getMonitorData($message->EventKey);
-				$text = sprintf("当前余额:%s\n最后更新时间:%s\n最后一次支付:%s\n最后支付时间:%s\n",$data['setting']['balance'],$data['setting']['updated_at'],$data['setting']['last_paid_balance'],$data['setting']['last_paid_date']);
+				$text = sprintf("余额:%s\n更新时间:%s\n上次支付:%s\n支付时间:%s\n",$data['setting']['balance'],$data['setting']['updated_at'],$data['setting']['last_paid_balance'],$data['setting']['last_paid_date']);
 				foreach($data['results'] as $miner){
 					$text .= sprintf("%s:%s\n",$miner['miner'],$miner['updated_at']);
 				}
