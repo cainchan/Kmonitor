@@ -25,6 +25,9 @@ class WechatController extends Controller
 			    return '收到文字消息';
 			    break;
 			case 'event':
+				// 获取用户open_id
+				// 获取用户钱包地址,如果为空则提示去设置
+				// 根据钱包地址+矿池获取余额
 				$data = $this->getMonitorData($message->EventKey);
 				$text = sprintf("余额:%s\n更新时间:%s\n上次支付:%s\n支付时间:%s\n",$data['setting']['balance'],$data['setting']['updated_at'],$data['setting']['last_paid_balance'],$data['setting']['last_paid_date']);
 				foreach($data['results'] as $miner){
@@ -67,6 +70,18 @@ class WechatController extends Controller
                         'results' => $monitor_data,
                 ];
                 return $data;
+        }
+	public function getWeChatAuthCode()
+        {
+		$redirect_url = "http://monitor.kaychen.cn/setting";
+		$url = sprintf("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=0#wechat_redirect",config('wechat.app_id'),$redirect_url);
+		return redirect($url);
+        }
+	public function getWeChatOpenId(Request $request)
+        {
+		$code = $request->input('code');
+		$url = sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",config('wechat.app_id'),config('wechat.secret'),$code);
+                return file_get_contents($url);
         }
 
 }

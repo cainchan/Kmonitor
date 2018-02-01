@@ -3,11 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\MonitorData;
+use App\Pool;
 use App\WalletSetting;
 use Illuminate\Http\Request;
 
 class MonitorController extends Controller
 {
+	public function savePool(Request $request)
+	{
+		$result = ['result' => '', 'error_msg' => '', 'code' => 1];
+		// 通过wallet查询数据
+		$ret = Pool::where('open_id',$wallet)->first();
+		if (empty($ret)){
+			$ret = new Pool;
+			$ret->open_id = $open_id;
+			$ret->pool = "https://www.f2pool.com";
+			$ret->coin = "eth";
+			$ret->wallet = $request->input('wallet');
+			$ret->balance = "{}";
+			$ret->save();
+		}else if($ret->wallet != $request->input('wallet')){
+			// 更新时间
+			$ret->wallet = $request->input('wallet');
+			$ret->save();
+		}
+		return redirect('/');
+	}
 	public function saveWalletSetting(Request $request, $wallet)
 	{
 		$result = ['result' => '', 'error_msg' => '', 'code' => 1];
